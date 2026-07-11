@@ -5,91 +5,42 @@
 	if (isset($_POST['submit']))
 	{
 		global $conn;
-		$clientID = $_POST['clientID'];
-		$program = $_POST['program'];
+		$adminID = $_POST['adminID'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+        $email = $_POST['email'];
 		
-		if ($program == '')
+		if(empty($_FILES['image']['name']))
 		{
-			$sql = "UPDATE client
-					SET programJoined = '$program'
-					WHERE clientID = '$clientID'";
-					
+			$sql = "UPDATE admin
+					SET adminUsername = '$username', adminPassword = '$password', adminEmail = '$email'
+					WHERE adminID = '$adminID'";
+			mysqli_query($conn, $sql);
+		
+			
 			if (mysqli_query($conn, $sql))
 			{   
-				$sql = "DELETE FROM progression
-					WHERE clientID = '$clientID'";
-					
-				if (mysqli_query($conn, $sql))
-				{  
-					$sql = "DELETE FROM progresstracker
-					WHERE clientID = '$clientID'";
-					
-					if (mysqli_query($conn, $sql))
-					{  
-						header('location: ../admin/manageMember.php');
-					}
-					else
-					{
-						echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-					}
-				}
-				else
-				{
-					echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-				}
+				header('location: ../admin/profile.php');
 			}
 			else
 			{
 				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-			}	
-		}
+			}			
+		} 
 		else
 		{
-			$sql = "UPDATE client
-					SET programJoined = '$program'
-					WHERE clientID = '$clientID'";
-					
-			if (mysqli_query($conn, $sql))
-			{   
-				$sql = "UPDATE progression
-						SET program = '$program'
-						WHERE clientID = '$clientID'";
-					
-				if (mysqli_query($conn, $sql))
-				{  
-					$sql = "UPDATE progression
-						SET program = '$program'
-						WHERE clientID = '$clientID'";
-						
-					if (mysqli_query($conn, $sql))
-					{  
-						$sql = "UPDATE progresstracker
-						SET program = '$program'
-						WHERE clientID = '$clientID'";
-						
-						if (mysqli_query($conn, $sql))
-						{  
-							header('location: ../admin/manageMember.php');
-						}
-						else
-						{
-							echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-						}
-					}
-					else
-					{
-						echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-					}
-				}
-				else
-				{
-					echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-				}
-			}
-			else
+			$image = $_FILES['image']['name'];
+			$path = "assets/images/".basename($image);
+			
+			$sql = "UPDATE admin
+					SET adminUsername = '$username', adminPassword = '$password', adminEmail = '$email', adminIMG = '$path'
+					WHERE adminID = '$adminID'";
+			mysqli_query($conn, $sql);
+			
+			if (move_uploaded_file($_FILES['image']['tmp_name'], $path))
 			{
-				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-			}	
+				header('location: ../admin/profile.php');
+			}
 		}
 	}
 ?>
@@ -125,6 +76,63 @@
 
     <!-- Template Stylesheet -->
     <link href="../../css/style.css" rel="stylesheet">
+	
+	<style>
+		.container {
+		  position: relative;
+		  width: 100%;
+		}
+
+		.image {
+		  display: block;
+		  width: 100%;
+		  height: auto;
+		}
+
+		.overlay {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  left: 0;
+		  right: 0;
+		  height: 100%;
+		  width: 100%;
+		  opacity: 0;
+		  transition: .5s ease;
+		  background-color: grey;
+		}
+
+		.container:hover .overlay {
+		  opacity: 0.5;
+		}
+
+		.text {
+		  color: white;
+		  font-size: 20px;
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  -webkit-transform: translate(-50%, -50%);
+		  -ms-transform: translate(-50%, -50%);
+		  transform: translate(-50%, -50%);
+		  text-align: center;
+		}
+
+        .cancel-btn {
+            background-color: white;
+            color: #ed563b;
+            border: 2px solid #ed563b;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background-color: #ed563b;
+            color: white;
+        }
+	</style>
 </head>
 
 <body>
@@ -155,7 +163,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="../admin/dashboard.php" class="navbar-brand mx-4 mb-3">
+                <a href="indexAdmin.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Admin</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -171,15 +179,15 @@
                         <span>Admin</span>
                     </div>
                 </div>
-               <div class="navbar-nav w-100">
+                 <div class="navbar-nav w-100">
                     <a href="../admin/dashboard.php" class="nav-item nav-link"><i class="fa fa-user-tag me-2"></i>Membership</a>
 					<a href="../admin/updateWebsite.php" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Update Website</a>
-                    <a href="../admin/manageMember.php" class="nav-item nav-link active"><i class="fa fa-user-plus me-2"></i>Manage Member</a>
+                    <a href="../admin/manageMember.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Manage Member</a>
                     <a href="../admin/progress.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Progress Tracker</a>
                     <a href="../admin/history.php" class="nav-item nav-link"><i class="fa fa-file-invoice me-2"></i>Payment History</a>
                     <!--<a href="../admin/History.php" class="nav-item nav-link"><i class="fa fa-line-chart me-2"></i>Report</a>
                     <a href="../admin/History.php" class="nav-item nav-link"><i class="fa fa-bell-on me-2"></i>Announcement</a>-->
-                    <a href="../admin/profile.php" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Profile</a>
+                    <a href="../admin/profile.php" class="nav-item nav-link active"><i class="fa fa-user-cog me-2"></i>Profile</a>
                 </div>
             </nav>
         </div>
@@ -190,7 +198,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="../admin/dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="indexAdmin.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -213,73 +221,72 @@
             </nav>
             <!-- Navbar End -->
 
+
             <!-- Form Start -->
             <div class="container-fluid pt-4 px-4">
-               <div class="bg-secondary text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Membership Details</h6>
+                <div class="center">
+                    <div class="col-sm-12 col-xl-6">
                     </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col">client ID</th>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Membership Status</th>
-                                    <th scope="col">Program</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Update Profile Information</h6>
+                            <form method = "POST" action = "../admin/profile.php" enctype="multipart/form-data">
 								<?php
 									global $conn;
-									$clientID = $_GET['regID'];
-									$sql = "SELECT * FROM client WHERE clientID = $clientID";
+									$sql = "SELECT * FROM admin WHERE logStatus = 1";
 									$result = mysqli_query($conn, $sql);
-
+									
 									if ($result -> num_rows > 0)
 									{
 										while ($row = $result -> fetch_assoc())
 										{
-											echo "<form method = 'POST' action = '../admin/registerMember.php?regID=$row[clientID]'>
-													<tr style = 'text-align: center;'>
-														<td>".$row['clientID']."</td>
-														<td>".$row['fullName']."</td>
-														<td>".$row['member']."</td>
-														<td>";
-															if ($row['programJoined'] == '')
-															{
-																echo "None";
-															}
-															else
-															{
-																echo $row['programJoined'];
-															}
-														"</td>
-													</tr>
-												</form>";
+											$adminID = $row['adminID'];
+											$username = $row['adminUsername'];
+											$email = $row['adminEmail'];
+											$password = $row['adminPassword'];
+											$img = $row['adminIMG'];
 										}
 									}
+									else
+									{
+										echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+									}
 								?>
-                            </tbody>
-                        </table>
-                    </div>
-					<div class="bg-secondary rounded h-100 p-4">
-						<form method = "POST" action = "../admin/registerMember.php">
-							 <div class="row mb-3" style = "text-align: left">
-								<span>Register For: </span>
-								<div class="col-sm-10">
-									<input type="hidden" name="clientID" value="<?php echo $clientID ?>">
-									<input type="radio" name="program" value="Eek! Personal Program">
-										<label for="html">Eek! Personal Program</label><br>
-									<input type="radio" name="program" value="Eek! Online Program">
-										<label for="html">Eek! Online Program</label><br>
-									<input type="radio" name="program" value="">
-										<label for="html">End current program</label><br>
-								</div>
-							</div>
-							<button><a href="../admin/manageMember.php">Cancel</a></button>
-							<button type="submit" class="button5" name = "submit">Apply</button>
-					  </form>
+								<div class="row mb-3">
+									<center><img class="rounded-circle" src="<?php echo $img ?>" style="width: 30%;">
+                                </div><br>
+								<div class="row mb-3">
+                                    <label for="inputFname" class="col-sm-2 col-form-label">Username</label>
+                                    <div class="col-sm-10">
+										<input type="hidden" class="form-control" id="inputFname" name = "adminID" value = "<?php echo $adminID ?>">
+										<input type="text" class="form-control" id="inputFname" name = "username" value = "<?php echo $username ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputFname" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputFname" name = "email" value = "<?php echo $email ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputLname" class="col-sm-2 col-form-label">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputLname" name = "password" value = "<?php echo $password ?>">
+                                    </div>
+                                </div>
+								<div class="row mb-3">
+                                    <label for="inputFname" class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="inputFname" name = "image">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="submit">Update</button>
+
+                                <button type="button" class="btn cancel-btn" onclick="window.location.href='../admin/dashboard.php';">
+                                    Cancel
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,20 +1,2 @@
-# XAMPP
-xampp/
-
-# VS Code
 .vscode/
-
-# Logs
-*.log
-
-# macOS
-.DS_Store
-
-# Windows
 Thumbs.db
-
-# Database exports (optional)
-*.sql
-
-# Composer
-vendor/

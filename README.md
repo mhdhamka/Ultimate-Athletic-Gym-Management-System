@@ -67,4 +67,3 @@ Potential future migration/enhancement:
 - React.js / Vue.js for frontend interface
 - Docker containerization
 - Cloud deployment
-- CI/CD pipeline integration

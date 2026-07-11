@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include "dbConnect_UAGMS.php";
+	include ("../config/db_cUAGMS.php");
 	
 	if (isset($_POST['submit']))
 	{
@@ -50,14 +50,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -88,7 +88,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="../admin/dashboard.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Admin</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -105,15 +105,14 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="indexAdmin.php" class="nav-item nav-link"><i class="fa fa-user-tag me-2"></i>Membership</a>
-					<a href="updateWebsite.php" class="nav-item nav-link active"><i class="fa fa-laptop me-2"></i>Update Website</a>
-                    <a href="manageMember.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Manage Member</a>
-                    <a href="progress.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Progress Tracker</a>
-                    <a href="History.php" class="nav-item nav-link"><i class="fa fa-file-invoice me-2"></i>Payment History</a>
-                    <!--<a href="History.php" class="nav-item nav-link"><i class="fa fa-line-chart me-2"></i>Report</a>
-                    <a href="History.php" class="nav-item nav-link"><i class="fa fa-bell-on me-2"></i>Announcement</a>-->
-                    <a href="adminProfile.php" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>My Profile</a>
-                    <a href="logoutAdmin.php" class="nav-item nav-link"><i class="fa fa-sign-out me-2"></i>Sign Out</a>
+                    <a href="../admin/dashboard.php" class="nav-item nav-link"><i class="fa fa-user-tag me-2"></i>Membership</a>
+					<a href="../admin/updateWebsite.php" class="nav-item nav-link active"><i class="fa fa-laptop me-2"></i>Update Website</a>
+                    <a href="../admin/manageMember.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Manage Member</a>
+                    <a href="../admin/progress.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Progress Tracker</a>
+                    <a href="../admin/history.php" class="nav-item nav-link"><i class="fa fa-file-invoice me-2"></i>Payment History</a>
+                    <!--<a href="../admin/History.php" class="nav-item nav-link"><i class="fa fa-line-chart me-2"></i>Report</a>
+                    <a href="../admin/History.php" class="nav-item nav-link"><i class="fa fa-bell-on me-2"></i>Announcement</a>-->
+                    <a href="../admin/profile.php" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Profile</a>
                 </div>
             </nav>
         </div>
@@ -124,7 +123,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="../admin/dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -139,8 +138,8 @@
 							</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="adminProfile.php" class="dropdown-item">My Profile</a>
-                            <a href="logoutAdmin.php" class="dropdown-item">Log Out</a>
+                            <a href="../admin/profile.php" class="dropdown-item">Profile</a>
+                            <a href="../public/logout.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -243,7 +242,7 @@
 											<input type="text" class="form-control" id="inputFname" name = "detail" value = "<?php echo $detail ?>">
 										</div>
 									</div>
-									<button type="submit" class="btn btn-primary" style = "background-color: white"><a href = "updateWebsite.php" style = "font-color: white;">Cancel</a></button>
+									<button type="submit" class="btn btn-primary" style = "background-color: white"><a href = "../admin/updateWebsite.php" style = "font-color: white;">Cancel</a></button>
 									<button type="submit" class="btn btn-primary" name = "submit">Update</button>
 								</form>
 							</div>
@@ -275,16 +274,16 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="../../lib/chart/chart.min.js"></script>
+    <script src="../../lib/easing/easing.min.js"></script>
+    <script src="../../lib/waypoints/waypoints.min.js"></script>
+    <script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="../../js/main.js"></script>
 	<script src="https://kit.fontawesome.com/626fa0fc8f.js" crossorigin="anonymous"></script>
 </body>
 

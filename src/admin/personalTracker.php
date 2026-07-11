@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Connect to the database
-include "dbConnect_UAGMS.php";
+include ("../config/db_cUAGMS.php");
 
 global $conn;
 
