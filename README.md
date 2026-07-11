@@ -1,11 +1,31 @@
-  =>  Template Name    : DarkPan - Bootstrap 5 Admin Template
+# Ultimate Athletic Gym Management System (UAGMS)
 
-  =>  Template Link    : https://htmlcodex.com/bootstrap-5-admin-template
+A web-based Gym Management System built using PHP, MySQL, HTML, CSS, JavaScript, and Bootstrap.
 
-  =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
+## Features
 
-  =>  Template Author  : HTML Codex
+- Customer registration and authentication
+- Admin dashboard
+- Membership management
+- Fitness program management
+- Payment tracking
+- Customer profile management
+- Progress tracking
+- Invoice generation
 
-  =>  Author Website   : https://htmlcodex.com
+## Tech Stack
 
-  =>  About HTML Codex : HTML Codex is one of the top creators and publishers of Free HTML templates, HTML landing pages, HTML email templates and HTML snippets in the world. Read more at ( https://htmlcodex.com/about-us )
+Frontend:
+- HTML
+- CSS
+- JavaScript
+- Bootstrap
+
+Backend:
+- PHP
+
+Database:
+- MySQL
+
+Environment:
+- XAMPP
